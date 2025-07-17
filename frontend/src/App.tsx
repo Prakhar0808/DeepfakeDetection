@@ -91,40 +91,40 @@ export default function App() {
 
     const mediaType = getMediaType(file);
 
+    // Make modelMultiplier available in both try and catch
+    const modelMultiplier = settings.model === 'fast' ? 0.7 : settings.model === 'accurate' ? 1.3 : settings.model === 'enterprise' ? 1.5 : 1;
+
     // Real API call with progressive UI updates
     const formData = new FormData();
-    formData.append('media', file); // "media" should match Django's expected key
+    formData.append('file', file); // key must match Django's expected key
 
     try {
       // Simulate progressive analysis with different steps for different media types
-    const progressSteps = mediaType === 'audio' 
-      ? [
-          { step: 15, delay: 200, stage: 'Loading audio file...' },
-          { step: 35, delay: 400, stage: 'Extracting spectral features...' },
-          { step: 55, delay: 600, stage: 'Analyzing voice patterns...' },
-          { step: 75, delay: 500, stage: 'Detecting synthetic artifacts...' },
-          { step: 90, delay: 300, stage: 'Computing confidence scores...' },
-          { step: 100, delay: 200, stage: 'Analysis complete!' }
-        ]
-      : mediaType === 'video'
-      ? [
-          { step: 10, delay: 300, stage: 'Processing video frames...' },
-          { step: 30, delay: 500, stage: 'Detecting faces and objects...' },
-          { step: 50, delay: 700, stage: 'Analyzing temporal consistency...' },
-          { step: 70, delay: 600, stage: 'Checking for artifacts...' },
-          { step: 85, delay: 400, stage: 'Biometric verification...' },
-          { step: 100, delay: 200, stage: 'Analysis complete!' }
-        ]
-      : [
-          { step: 20, delay: 250, stage: 'Loading image data...' },
-          { step: 45, delay: 400, stage: 'Detecting synthetic patterns...' },
-          { step: 70, delay: 500, stage: 'Analyzing pixel artifacts...' },
-          { step: 90, delay: 300, stage: 'Computing authenticity score...' },
-          { step: 100, delay: 150, stage: 'Analysis complete!' }
-        ];
-
-      // Adjust timing based on model selection
-      const modelMultiplier = settings.model === 'fast' ? 0.7 : settings.model === 'accurate' ? 1.3 : settings.model === 'enterprise' ? 1.5 : 1;
+      const progressSteps = mediaType === 'audio' 
+        ? [
+            { step: 15, delay: 200, stage: 'Loading audio file...' },
+            { step: 35, delay: 400, stage: 'Extracting spectral features...' },
+            { step: 55, delay: 600, stage: 'Analyzing voice patterns...' },
+            { step: 75, delay: 500, stage: 'Detecting synthetic artifacts...' },
+            { step: 90, delay: 300, stage: 'Computing confidence scores...' },
+            { step: 100, delay: 200, stage: 'Analysis complete!' }
+          ]
+        : mediaType === 'video'
+        ? [
+            { step: 10, delay: 300, stage: 'Processing video frames...' },
+            { step: 30, delay: 500, stage: 'Detecting faces and objects...' },
+            { step: 50, delay: 700, stage: 'Analyzing temporal consistency...' },
+            { step: 70, delay: 600, stage: 'Checking for artifacts...' },
+            { step: 85, delay: 400, stage: 'Biometric verification...' },
+            { step: 100, delay: 200, stage: 'Analysis complete!' }
+          ]
+        : [
+            { step: 20, delay: 250, stage: 'Loading image data...' },
+            { step: 45, delay: 400, stage: 'Detecting synthetic patterns...' },
+            { step: 70, delay: 500, stage: 'Analyzing pixel artifacts...' },
+            { step: 90, delay: 300, stage: 'Computing authenticity score...' },
+            { step: 100, delay: 150, stage: 'Analysis complete!' }
+          ];
 
       // Start progress animation
       const progressInterval = setInterval(() => {
