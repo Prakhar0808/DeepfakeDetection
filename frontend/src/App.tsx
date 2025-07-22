@@ -147,8 +147,9 @@ export default function App() {
 
       // Process API response and create comprehensive result
       const apiResult = response.data;
-      const probability = parseFloat(apiResult.probability) / 100; // Convert percentage to decimal
-      
+      // Use fake_probability from backend
+      const probability = parseFloat(apiResult.fake_probability);
+
       const comprehensiveResult: AnalysisResult = {
         probability: probability,
         confidence: 0.85 + Math.random() * 0.1, // API doesn't provide confidence, so we estimate
